@@ -19,7 +19,7 @@ local Indicator = NeverLose:CreateIndicator();
 local window = NeverLose:CreateWindow({
 	Logo = NeverLose.GlobalLogo,
 	Name = "Neverlose",
-	Content = "Counter-Strike 2",
+	Content = "",
 	Size = NeverLose.Scales.Default,
 	ConfigFolder = "NeverLoseConfigs",
 	Enable3DRenderer = false,
@@ -40,8 +40,8 @@ local HC = Indicator.new({
 -- Add Tab Label --
 window:AddTabLabel('AIMBOT')
 
-local ping = Watermark:AddBlock("chart-four-vertical-bars" , "0MS");
-local UITogg = Watermark:AddBlock("cube-vertexes" , "Neverlose");
+local Build = Watermark:AddBlock("chart-four-vertical-bars" , "beta");
+local UITogg = Watermark:AddBlock("cube-vertexes" , "Toggle Ui");
 
 UITogg:Input(function()
 	window:ToggleInterface();
@@ -387,25 +387,3 @@ Notification.new({
 Logging.new("crosshairs",'Hit thatguy in the neck for 100 damage',15)
 task.wait(1)
 Logging.new("crosshairs-slash",'Missed shot due to prediction error & YOUR NN',15)
-
-HC:SetRender(true);
-
-while true do task.wait(3)
-	Watermark:SetRender(true);
-	
-	HC:SetColor('Red')
-	HC:SetText("FL")
-	task.wait(3);
-	Watermark:SetRender(false);
-	HC:SetColor('Green');
-	HC:SetText("AUTO")
-	task.wait(3)
-	Watermark:SetRender(true);
-	HC:SetColor('White')
-	HC:SetText("HC")
-	task.wait(1)
-	Watermark:SetRender(false);
-	HC:SetRender(false);
-	task.wait(1)
-	HC:SetRender(true);
-end
