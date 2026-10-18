@@ -29,7 +29,6 @@ local window = NeverLose:CreateWindow({
 -- Creating Watermark --
 local Watermark = window:Watermark();
 
-
 -- Indicator (Hit-Chance)--
 local HC = Indicator.new({
 	Name = "HC",
@@ -40,18 +39,38 @@ local HC = Indicator.new({
 -- Add Tab Label --
 window:AddTabLabel('AIMBOT')
 
+local Name = Watermark:AddBlock("triangle-exclamation" , "Subatomic");
 local Build = Watermark:AddBlock("chart-four-vertical-bars" , "beta");
+local FPSBlock = Watermark:AddBlock("activity", "0 FPS");
+local PingBlock = Watermark:AddBlock("signal", "0 MS");
 local UITogg = Watermark:AddBlock("cube-vertexes" , "Toggle Ui");
 
 UITogg:Input(function()
 	window:ToggleInterface();
 end);
 
-task.spawn(function()
-	while true do task.wait(1)
-		ping:SetText(tostring(game:GetService('Players').LocalPlayer:GetNetworkPing())..'MS')
+-- Loop อัปเดต FPS และ Ping แบบ Real-time --
+local RunService = game:GetService("RunService");
+local Stats = game:GetService("Stats");
+
+local lastUpdate = tick();
+local frameCount = 0;
+
+RunService.RenderStepped:Connect(function()
+	frameCount = frameCount + 1;
+	local now = tick();
+	
+	if now - lastUpdate >= 0.5 then
+		local fps = math.floor(frameCount / (now - lastUpdate));
+		local ping = math.floor(Stats.Network.ServerStatsItem["Data Ping"]:GetValue());
+		
+		FPSBlock:SetText(tostring(fps) .. " FPS");
+		PingBlock:SetText(tostring(ping) .. " MS");
+		
+		frameCount = 0;
+		lastUpdate = now;
 	end
-end)
+end);
 
 -- Creating Tab --
 
@@ -75,7 +94,6 @@ local Selection = Rage:AddSection({
 })
 
 local Other = Rage:AddSection({
-	
 	Name = "OTHER",
 	Position = 'right'
 })
@@ -84,7 +102,6 @@ local AntiAim = Rage:AddSection({
 	Name = "ANTI-AIM",
 	Position = 'right'
 })
-
 
 -- Something like paragraph: <STRING : TEXT, BOOLEAN : WARP> --
 Raging:AddLabel('Ts so skbidi\nfr noi cap',true)
@@ -270,19 +287,16 @@ Other:AddLabel('Remove Recoil'):AddToggle({
 	Callback = print
 })
 
-
 Other:AddLabel('Remove Spread'):AddToggle({
 	Default = false,
 	Flag = "removespread",
 	Callback = print
 })
 
-
 Other:AddLabel('Duck Peek Assist'):AddToggle({
 	Default = false,
 	Callback = print
 })
-
 
 local qpa = Other:AddLabel('Quick Peek Assist');
 qpa:AddToggle({
@@ -366,7 +380,6 @@ window.UserSettings:AddLabel("Menu Keybind"):AddKeybind({
 	Default = 'Insert',
 	Callback = function(v)
 		window.Keybind = v;
-		
 		Logging.new("ps4-touchpad",'Changed ui keybind to '..tostring(v),5)
 	end,
 })
@@ -376,7 +389,6 @@ window.UserSettings:AddLabel('Menu Scale'):AddDropdown({
 	Values = {"Default",'Large','Mobile','Small'},
 	Callback = function(v)
 		window:SetSize(NeverLose.Scales[v]);
-		
 		Logging.new("crop",'Changed ui size to '..tostring(v),5)
 	end,
 })
@@ -393,7 +405,6 @@ window.UserSettings:AddButton({
 	Name = 'Discord',
 	Callback = function()
 		print('invite')
-		
 		Logging.new("discord",'Copied discord invite link',5)
 	end,
 })
