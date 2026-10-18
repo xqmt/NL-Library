@@ -20,7 +20,7 @@ local window = NeverLose:CreateWindow({
 	Logo = NeverLose.GlobalLogo,
 	Name = "Neverlose",
 	Content = "",
-	Size = NeverLose.Scales.Default,
+	Size = NeverLose.Scales.Large,
 	ConfigFolder = "NeverLoseConfigs",
 	Enable3DRenderer = false,
 	Keybind = "Insert"
@@ -141,7 +141,7 @@ Raging:AddLabel('Field of View'):AddSlider({
 	Rounding = 1,
 	Default = 100,
 	Type = "Lv",
-	Size = 100,
+	Size = 150,
 	Callback = print,
 	Flag = "fov",
 })
@@ -176,6 +176,7 @@ Multipoint:AddOption():AddLabel('Multipoint'):AddSlider({
 	Min = 0,
 	Max = 100,
 	Default = 75,
+	Size = 150,
 	Flag = "multipoint",
 	Callback = print
 })
@@ -203,7 +204,7 @@ hc:AddSlider({
 		[0] = 'Auto',
 	},
 	Flag = "hc",
-	Size = 95,
+	Size = 150,
 	Default = 50,
 })
 
@@ -220,7 +221,7 @@ md:AddSlider({
 		[0] = 'Auto',
 	},
 	Flag = "md",
-	Size = 95,
+	Size = 150,
 	Default = 15,
 })
 
@@ -332,6 +333,32 @@ AntiAim:AddLabel('Mouse Override'):AddToggle({
 	Default = false,
 	Flag = "mouse_override",
 	Callback = print
+})
+
+-- #### EXAMPLES: Color Picker & Multi Dropdown #### --
+
+-- Example 1: Custom Accent / ESP Color Picker
+Other:AddLabel('Accent Color'):AddColorPicker({
+	Default = Color3.fromRGB(0, 162, 255),
+	Flag = "AccentColor",
+	Callback = function(col)
+		print("Selected Color:", col)
+	end,
+})
+
+-- Example 2: Target Selection Multi Dropdown
+Selection:AddLabel('Target Options'):AddDropdown({
+	Default = {
+		["1"] = true,
+	},
+	Values = {"1", "2", "3", "4"},
+	Multi = true,
+	Callback = function(selected)
+		print("Selected Multi Options:", selected)
+	end,
+	AutoUpdate = false,
+	Flag = "MySingleDropdown",
+	Size = 150,
 })
 
 ---------- Menu Configuration ------------
