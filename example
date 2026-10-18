@@ -40,10 +40,8 @@ local HC = Indicator.new({
 window:AddTabLabel('AIMBOT')
 
 local Name = Watermark:AddBlock("triangle-exclamation" , "Subatomic");
-local Build = Watermark:AddBlock("chart-four-vertical-bars" , "beta");
-local FPSBlock = Watermark:AddBlock("activity", "0 FPS");
-local PingBlock = Watermark:AddBlock("signal", "0 MS");
-local UITogg = Watermark:AddBlock("cube-vertexes" , "Toggle Ui");
+local PingBlock = Watermark:AddBlock("chart-four-vertical-bars", "0 MS");
+local UITogg = Watermark:AddBlock("cube-vertexes" , "Toggle UI");
 
 UITogg:Input(function()
 	window:ToggleInterface();
