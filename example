@@ -39,35 +39,12 @@ local HC = Indicator.new({
 -- Add Tab Label --
 window:AddTabLabel('AIMBOT')
 
-local Name = Watermark:AddBlock("triangle-exclamation" , "Subatomic");
-local PingBlock = Watermark:AddBlock("chart-four-vertical-bars", "0 MS");
+local Name = Watermark:AddBlock("sword" , "Subatomic");
+local PingBlock = Watermark:AddBlock("chart-four-vertical-bars", "v.1.6.7");
 local UITogg = Watermark:AddBlock("cube-vertexes" , "Toggle UI");
 
 UITogg:Input(function()
 	window:ToggleInterface();
-end);
-
--- Loop อัปเดต FPS และ Ping แบบ Real-time --
-local RunService = game:GetService("RunService");
-local Stats = game:GetService("Stats");
-
-local lastUpdate = tick();
-local frameCount = 0;
-
-RunService.RenderStepped:Connect(function()
-	frameCount = frameCount + 1;
-	local now = tick();
-	
-	if now - lastUpdate >= 0.5 then
-		local fps = math.floor(frameCount / (now - lastUpdate));
-		local ping = math.floor(Stats.Network.ServerStatsItem["Data Ping"]:GetValue());
-		
-		FPSBlock:SetText(tostring(fps) .. " FPS");
-		PingBlock:SetText(tostring(ping) .. " MS");
-		
-		frameCount = 0;
-		lastUpdate = now;
-	end
 end);
 
 -- Creating Tab --
